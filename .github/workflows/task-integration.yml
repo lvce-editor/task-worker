@@ -43,9 +43,12 @@ jobs:
         working-directory: .tmp/lvce-editor
         shell: bash
         run: |
-          for attempt in 1 2 3; do
+          for attempt in 1 2 3 4 5; do
             if node packages/build/src/parts/DownloadBuiltinExtensions/DownloadBuiltinExtensions.ts; then
               exit 0
+            fi
+            if [ "$attempt" -lt 5 ]; then
+              sleep "$((attempt * 5))"
             fi
           done
           exit 1
