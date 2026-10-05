@@ -29,7 +29,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           repository: lvce-editor/lvce-editor
-          ref: fbf7db1c10436cbb9d91e71526f4edb880ce8349
+          ref: 24011798cb65c73ca722fc63020d0b055c8064d4
           path: .tmp/lvce-editor
       - uses: actions/setup-node@v6
         with:
@@ -69,7 +69,11 @@ jobs:
         run: |
           npm run build:server
           npm run test-static-export
-      - name: Test default build task
-        working-directory: .tmp/lvce-editor/packages/extension-host-worker-tests
+      - name: Test default build task in Electron
         shell: bash
-        run: node src/_all.js --ci --headless --test-name-prefix=tasks.run-default-build-task
+        run: |
+          if [ "$RUNNER_OS" = Linux ]; then
+            xvfb-run -a node packages/editor-integration/run.mjs .tmp/lvce-editor
+          else
+            node packages/editor-integration/run.mjs .tmp/lvce-editor
+          fi

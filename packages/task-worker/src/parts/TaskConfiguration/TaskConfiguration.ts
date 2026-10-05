@@ -43,12 +43,31 @@ export const getDefaultBuildTask = (content: string): Task => {
   }
   return {
     ...(typeof task.label === 'string' && { label: task.label }),
+    ...(typeof task.type === 'string' && { type: task.type }),
     args: (task.args as string[] | undefined) || [],
     command: task.command,
   }
 }
 
-export const getCommandLine = (task: Task): string => {
-  const args = task.args.map((arg) => (/\s/.test(arg) ? `"${arg.replaceAll('"', '\\"')}"` : arg))
-  return [task.command, ...args].join(' ')
+const quoteArgument = (argument: string, powershell: boolean): string => {
+  if (!powershell && /^[a-zA-Z0-9_./:@%+=,-]+$/.test(argument)) {
+    return argument
+  }
+  return powershell ? `'${argument.replaceAll("'", "''")}'` : `'${argument.replaceAll("'", "'\\''")}'`
+}
+
+export const getCommandLine = (task: Task, shell = 'bash'): string => {
+  const shellName = shell
+    .split(/[\\/]/)
+    .at(-1)
+    ?.toLowerCase()
+    .replace(/\.exe$/, '')
+  const powershell = shellName === 'powershell' || shellName === 'pwsh'
+  if (!powershell && shellName !== 'bash' && shellName !== 'zsh' && shellName !== 'sh') {
+    throw new Error(`Task argument formatting is not supported for shell ${shell}.`)
+  }
+  const command = task.type === 'process' ? quoteArgument(task.command, powershell) : task.command
+  const prefix = task.type === 'process' && powershell ? '& ' : ''
+  const args = task.args.map((argument) => quoteArgument(argument, powershell))
+  return prefix + [command, ...args].join(' ')
 }

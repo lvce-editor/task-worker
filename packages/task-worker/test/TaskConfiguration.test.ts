@@ -7,11 +7,11 @@ describe('getDefaultBuildTask', () => {
       '{"tasks":[{"command":"npm","group":{"isDefault":true,"kind":"test"},"label":"test"},{"args":["run","build"],"command":"npm","group":{"isDefault":true,"kind":"build"},"label":"build","type":"shell"}]}',
     )
 
-    expect(task).toEqual({ args: ['run', 'build'], command: 'npm', label: 'build' })
+    expect(task).toEqual({ args: ['run', 'build'], command: 'npm', label: 'build', type: 'shell' })
     expect(getCommandLine(task)).toBe('npm run build')
     expect(
       getCommandLine(getDefaultBuildTask('{"tasks":[{"args":["hello there"],"command":"echo","group":{"isDefault":true,"kind":"build"}}]}')),
-    ).toBe('echo "hello there"')
+    ).toBe("echo 'hello there'")
   })
 
   it('rejects malformed task configuration', () => {
@@ -39,5 +39,21 @@ describe('getDefaultBuildTask', () => {
     expect(() => getDefaultBuildTask('{"tasks":[{"command":"npm\\necho unsafe","group":{"isDefault":true,"kind":"build"}}]}')).toThrow(
       'must have a command',
     )
+  })
+})
+
+describe('literal task arguments', () => {
+  it('quotes punctuation, empty strings and shell substitutions for POSIX shells', () => {
+    expect(getCommandLine({ args: ['-e', "console.log('task-ran')", '', '$HOME; echo unexpected'], command: 'node' })).toBe(
+      "node -e 'console.log('\\''task-ran'\\'')' '' '$HOME; echo unexpected'",
+    )
+  })
+  it('quotes PowerShell arguments and invokes process task paths', () => {
+    expect(
+      getCommandLine({ args: ['-e', "console.log('task-ran')"], command: 'C:\\Program Files\\node.exe', type: 'process' }, 'powershell.exe'),
+    ).toBe("& 'C:\\Program Files\\node.exe' '-e' 'console.log(''task-ran'')'")
+  })
+  it('rejects unsupported shells before command execution', () => {
+    expect(() => getCommandLine({ args: [], command: 'node' }, 'cmd.exe')).toThrow('not supported')
   })
 })

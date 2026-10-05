@@ -7,6 +7,11 @@ export default defineConfig([
   ...recommendedVirtualDom,
   ...recommendedActions,
   {
+    // Task objects use type for shell/process, not a virtual DOM element.
+    files: ['packages/task-worker/test/TaskConfiguration.test.ts', 'packages/editor-integration/src/*.ts'],
+    rules: { 'virtual-dom/no-object-attribute-values': 'off' },
+  },
+  {
     ignores: ['packages/quick-pick-worker/test/GetJson.test.ts'],
   },
   {

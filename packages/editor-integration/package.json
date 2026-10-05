@@ -1,0 +1,13 @@
+{
+  "name": "editor-integration",
+  "private": true,
+  "version": "0.0.0-dev",
+  "type": "module",
+  "scripts": {
+    "type-check": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "^24.1.0"
+  }
+}
