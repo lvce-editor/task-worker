@@ -25,7 +25,8 @@
     },
     "packages/editor-integration": {
       "entry": ["prepare.mjs", "run.mjs", "src/*.ts"],
-      "project": ["*.mjs", "src/*.ts"]
+      "project": ["*.mjs", "src/*.ts"],
+      "ignoreDependencies": ["electron"]
     }
   }
 }
