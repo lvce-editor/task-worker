@@ -1,0 +1,45 @@
+{
+  "name": "@lvce-editor/task-worker",
+  "version": "0.0.0-dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lvce-editor/task-worker.git"
+  },
+  "license": "MIT",
+  "author": "Lvce Editor",
+  "type": "module",
+  "main": "dist/taskWorkerMain.js",
+  "devDependencies": {
+    "@lvce-editor/rpc": "^6.21.1",
+    "@lvce-editor/rpc-registry": "^9.66.0",
+    "@jest/globals": "^30.5.2"
+  },
+  "scripts": {
+    "test": "node --unhandled-rejections=warn --experimental-vm-modules ../../node_modules/jest/bin/jest.js --detectOpenHandles --forceExit"
+  },
+  "jest": {
+    "injectGlobals": false,
+    "extensionsToTreatAsEsm": [
+      ".ts"
+    ],
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1"
+    },
+    "transform": {
+      "^.+\\.tsx?$": [
+        "ts-jest",
+        {
+          "useESM": true
+        }
+      ]
+    },
+    "collectCoverage": true,
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80
+      }
+    }
+  }
+}

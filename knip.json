@@ -16,6 +16,10 @@
       "entry": ["src/quickPickWorkerMain.ts", "test/**/*.test.ts"],
       "project": ["src/**/*.ts", "test/**/*.ts"]
     },
+    "packages/task-worker": {
+      "entry": ["src/taskWorkerMain.ts", "test/**/*.test.ts"],
+      "project": ["src/**/*.ts", "test/**/*.ts"]
+    },
     "packages/server": {
       "project": ["src/**/*.js"]
     }

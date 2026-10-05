@@ -9,13 +9,13 @@ import { root } from './root.js'
  * @type {import('rollup').RollupOptions}
  */
 const options = {
-  input: join(root, 'packages/quick-pick-worker/src/quickPickWorkerMain.ts'),
+  input: join(root, 'packages/task-worker/src/taskWorkerMain.ts'),
   preserveEntrySignatures: 'strict',
   treeshake: {
     propertyReadSideEffects: false,
   },
   output: {
-    file: join(root, '.tmp/dist/dist/quickPickWorkerMain.js'),
+    file: join(root, '.tmp/dist/dist/taskWorkerMain.js'),
     format: 'es',
     freeze: false,
     generatedCode: {
