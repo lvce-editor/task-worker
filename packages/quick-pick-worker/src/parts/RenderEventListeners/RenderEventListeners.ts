@@ -1,0 +1,46 @@
+import type { DomEventListener } from '../DomEventListener/DomEventListener.ts'
+import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+
+export const renderEventListeners = (): readonly DomEventListener[] => {
+  return [
+    {
+      name: DomEventListenerFunctions.HandlePointerDown,
+      params: ['handleClickAt', 'event.clientX', 'event.clientY', 'event.target.dataset.uri'],
+      preventDefault: true,
+    },
+    {
+      name: DomEventListenerFunctions.HandleWheel,
+      params: ['handleWheel', 'event.deltaMode', 'event.deltaY'],
+      passive: true,
+    },
+    {
+      name: DomEventListenerFunctions.HandleScrollbarPointerDown,
+      params: ['handleScrollBarPointerDown', 'event.clientY', 'event.pointerId'],
+      preventDefault: true,
+      stopPropagation: true,
+      trackPointerEvents: [DomEventListenerFunctions.HandleScrollbarPointerMove, DomEventListenerFunctions.HandleScrollbarPointerUp],
+    },
+    {
+      name: DomEventListenerFunctions.HandleScrollbarPointerMove,
+      params: ['handleScrollBarPointerMove', 'event.clientY', 'event.pointerId'],
+      preventDefault: true,
+    },
+    {
+      name: DomEventListenerFunctions.HandleScrollbarPointerUp,
+      params: ['handleScrollBarPointerUp', 'event.pointerId'],
+      preventDefault: true,
+    },
+    {
+      name: DomEventListenerFunctions.HandleBlur,
+      params: ['handleBlur'],
+    },
+    {
+      name: DomEventListenerFunctions.HandleInput,
+      params: ['handleInput', 'event.target.value'],
+    },
+    {
+      name: DomEventListenerFunctions.HandleFocus,
+      params: ['handleFocus'],
+    },
+  ]
+}

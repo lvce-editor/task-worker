@@ -1,0 +1,8 @@
+export const HandleWheel = 'handleWheel'
+export const HandlePointerDown = 'handlePointerDown'
+export const HandleBlur = 'handleBlur'
+export const HandleFocus = 'handleFocus'
+export const HandleInput = 'handleInput'
+export const HandleScrollbarPointerDown = 'handleScrollbarPointerDown'
+export const HandleScrollbarPointerMove = 'handleScrollbarPointerMove'
+export const HandleScrollbarPointerUp = 'handleScrollbarPointerUp'
