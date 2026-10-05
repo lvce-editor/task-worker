@@ -45,7 +45,7 @@ export const test = async ({
     const runCommand = async (label: string): Promise<void> => {
       await page.locator('.Explorer').click({ position: { x: 10, y: 10 } })
       console.warn(`Running command: ${label}; url=${page.url()}`)
-      await page.keyboard.press(process.platform === 'darwin' ? 'Meta+Shift+P' : 'Control+Shift+P')
+      await page.keyboard.press('F1')
       await expect(page.locator('.QuickPick')).toBeVisible()
       await page.locator('.QuickPick input').fill(`>${label}`)
       await expect(page.locator('.QuickPickItemActive')).toHaveText(label)
