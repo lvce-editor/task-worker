@@ -1,0 +1,5 @@
+export const DotDotDot = '...'
+export const Colon = ':'
+export const Percent = '%'
+export const AngleBracket = '>'
+export const View = 'view'
