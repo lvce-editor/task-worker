@@ -2,6 +2,7 @@
   "files": [],
   "include": [],
   "references": [
+    { "path": "./packages/task-worker" },
     {
       "path": "./packages/quick-pick-worker"
     },

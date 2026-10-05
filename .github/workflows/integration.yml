@@ -73,6 +73,10 @@ jobs:
         working-directory: .tmp/lvce-integration/packages/extension-host-worker-tests
         run: node src/_all.js --ci --headless --test-name-prefix=viewlet.quick-pick-open-workers-view
         shell: bash
+      - name: Test default build task
+        working-directory: .tmp/lvce-integration/packages/extension-host-worker-tests
+        run: node src/_all.js --ci --headless --test-name-prefix=tasks.run-default-build-task
+        shell: bash
       - name: Test Open Recent removal
         if: matrix.os == 'ubuntu-24.04'
         working-directory: .tmp/lvce-integration/packages/extension-host-worker-tests

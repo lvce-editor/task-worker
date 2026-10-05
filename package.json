@@ -1,5 +1,5 @@
 {
-  "name": "@lvce-editor/quick-pick-worker-monorepo",
+  "name": "@lvce-editor/task-worker-monorepo",
   "version": "0.0.0-dev",
   "license": "MIT",
   "author": "Lvce Editor",
@@ -10,7 +10,7 @@
   "scripts": {
     "build": "node packages/build/src/build.js",
     "build:static": "node packages/build/src/build-static.js",
-    "build:watch": "npm exec --workspace=packages/build -- esbuild --format=esm --bundle --sourcemap --external:node:buffer --external:electron --external:ws --external:node:worker_threads --watch packages/quick-pick-worker/src/quickPickWorkerMain.ts --outfile=.tmp/dist/dist/quickPickWorkerMain.js",
+    "build:watch": "npm exec --workspace=packages/build -- esbuild --format=esm --bundle --sourcemap --external:node:buffer --external:electron --external:ws --external:node:worker_threads --watch packages/task-worker/src/taskWorkerMain.ts --outfile=.tmp/dist/dist/taskWorkerMain.js",
     "dev": "node packages/build/src/dev.js",
     "e2e": "npm run e2e --workspace=packages/e2e",
     "e2e:firefox": "npm run e2e:firefox --workspace=packages/e2e",
