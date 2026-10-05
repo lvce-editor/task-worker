@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["esnext", "WebWorker"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "skipLibCheck": false,
+    "noEmit": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "types": [],
+    "allowImportingTsExtensions": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUncheckedSideEffectImports": true,
+    "exactOptionalPropertyTypes": true
+  },
+  "include": ["tasks.run-default-build-task.ts"]
+}
