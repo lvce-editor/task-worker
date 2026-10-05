@@ -1,4 +1,0 @@
-{
-  "artifacts": [[".tmp/dist", "packages/renderer-worker/node_modules/@lvce-editor/task-worker"]],
-  "scripts": []
-}
