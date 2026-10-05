@@ -21,7 +21,7 @@ export const test = async ({
   const argumentsToCheck = ['', 'space here', 'quote\'"', '$HOME; echo unexpected']
   // Splitting the marker keeps it out of the echoed command, so terminal assertions prove execution.
   const script =
-    "require('fs').writeFileSync('task-output.json',JSON.stringify({cwd:process.cwd(),args:process.argv.slice(1)}));console.log('TASK_'+'RESULT:',process.cwd())"
+    "require('fs').writeFileSync('task-output.json',JSON.stringify({cwd:process.cwd(),args:process.argv.slice(1)}));console.warn('TASK_'+'RESULT:',process.cwd())"
   const configuration = {
     tasks: [
       {
@@ -37,11 +37,14 @@ export const test = async ({
   await writeFile(configurationPath, JSON.stringify(configuration))
   try {
     await expect(page.locator('.Workbench')).toBeVisible()
+    await expect(page.locator('.Explorer')).toBeVisible()
     await electronApp.evaluate(({ BrowserWindow, dialog }, workspacePath) => {
       BrowserWindow.getAllWindows()[0]?.focus()
       dialog.showOpenDialog = async (): Promise<{ canceled: boolean; filePaths: string[] }> => ({ canceled: false, filePaths: [workspacePath] })
     }, workspace)
     const runCommand = async (label: string): Promise<void> => {
+      await page.locator('.Explorer').click({ position: { x: 10, y: 10 } })
+      console.warn(`Running command: ${label}; url=${page.url()}`)
       await page.keyboard.press(process.platform === 'darwin' ? 'Meta+Shift+P' : 'Control+Shift+P')
       await expect(page.locator('.QuickPick')).toBeVisible()
       await page.locator('.QuickPick input').fill(`>${label}`)
@@ -84,6 +87,9 @@ export const test = async ({
         }
       })
       .toBe(false)
+  } catch (error) {
+    console.warn(`Electron acceptance failed: ${await page.locator('body').innerText()}`)
+    throw error
   } finally {
     // Close the app before deleting its active workspace or terminal cwd.
     await electronApp.close()
